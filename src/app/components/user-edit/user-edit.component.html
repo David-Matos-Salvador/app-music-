@@ -1,4 +1,4 @@
-<div class="col-lg-11">
+
     <h3>{{titulo}}</h3>
     <form #userUpdateForm="ngForm"(ngSubmit)="onSubmit()" class="form-group col-6 ">    
        
@@ -7,7 +7,7 @@
         </div>
         <div class="form-group ">
           <label for="inputEmail4">Correo Electronico</label>
-          <input type="email"  #email="ngModel" [(ngModel)]="user.email" name="email" class="form-control" >
+          <input type="emai l"  #email="ngModel" [(ngModel)]="user.email" name="email" class="form-control" >
           <span *ngIf="!email.valid && email.touched">El email es obligatorio</span>
         </div>        
         <div class="form-row">
@@ -31,12 +31,11 @@
          
           <div class="form-group col-md-6" *ngIf="user.image && user.image!='null'">
            <img src="{{url+'get-image/'+user.image}}" alt="" class="img-thumbnail">
-          </div>
-      
+          </div>     
          
          
         </div>        
-        <button type="submit" class="btn btn-outline-light">Update data</button>     
+        <button type="submit" class="btn btn-outline-light">Update data</button>    
+         
     </form>
 
-</div>

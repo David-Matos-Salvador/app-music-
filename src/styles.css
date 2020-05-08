@@ -1,11 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-  background: #0F2027;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* You can add global styles to this file, and also import other style files */
+    body{
+    background: #0F2027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    }
 
-    color: white;
+    .head-title a{
+      color: #fff;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 20px;
+      
+      text-decoration: none;
+      display: block;
+      }
+      .head-title a:hover{
+      opacity: 0.6 ;
+      }
+
+  .navigation{
+    color:white;
+    text-align: center;
+    height: 100%;
+    background:#1c1c1f;
+    display: flex;
+    position: relative;
+   
   }
-  .btncolor{
-    border-color: chartreuse;
+  .navigation .sidebar{
+    width: 200px;
+    height: 100%;
+    background:#1c1c1f;
+    padding: 30px 0px;
+    position: fixed;
   }
+  .navigation nav a{
+    text-align: center;
+    font-size: 15px;    
+    width: 100%;
+    padding: 15px;    
+    display: block;
+    color: #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;    
+    text-decoration: none;
+  }
+  #main{
+    width: 100%;
+    margin-left: 200px;
+    color: #ddd;
+  }
+ 
+
+  #user_logged{  
+    text-decoration:center;    
+    border-top: 1px solid #444;
+    position: absolute;
+    bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px; padding: 15px; 
+    display: block;   
+    
+  }
+    
+
+  
+  
+  
