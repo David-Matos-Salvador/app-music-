@@ -2,16 +2,13 @@
   "name": "app-music",
   "version": "0.0.0",
   "scripts": {
-    
-   
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start:heroku":"node dist/index.html"
-
+    "start:heroku": "node dist/index.html"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~9.1.3",
     "@angular/router": "~9.1.3",
     "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "popper": "^1.0.1",
     "rxjs": "~6.5.4",
