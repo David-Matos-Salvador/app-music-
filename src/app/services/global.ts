@@ -1,3 +1,3 @@
 export const GLOBAL={
-    url:'http://localhost:4000/api/'
+    url:'https://app-music-david-matos.herokuapp.com/api/'
 }

@@ -1,7 +1,7 @@
 
-    <h3>{{titulo}}</h3>
-    <form #userUpdateForm="ngForm"(ngSubmit)="onSubmit()" class="form-group col-6 ">    
-       
+    
+    <form #userUpdateForm="ngForm"(ngSubmit)="onSubmit()" class=" col-6 ">    
+      <h3>{{titulo}}</h3>
         <div *ngIf="alertUpdate" class="alert alert-info">
           <strong>{{alertUpdate}} </strong>
         </div>

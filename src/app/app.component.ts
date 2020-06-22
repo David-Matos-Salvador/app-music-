@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from './models/user';
 import { UserService } from './services/user.service'
 import {GLOBAL} from './services/global';
+import {Router,ActivatedRoute,Params} from '@angular/router'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,10 +16,12 @@ export class AppComponent implements OnInit {
   public identity;
   public token;
   public errormessage:string;
-  public alertRegister
+  public alertRegister:string;
   public url:string;
 
-  constructor(private _userService: UserService) {
+  constructor(private _route:ActivatedRoute,
+    private _router:Router,
+    private _userService: UserService) {
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');
     this.user_register =new User('', '', '', '', '', 'ROLE_USER', '');
     this.url=GLOBAL.url;
@@ -35,11 +38,13 @@ export class AppComponent implements OnInit {
       res=>{
         let user = res.user;
         this.user_register=user;
-        if (!user.id) {
-          this.alertRegister='Error al Registrarse';     
+        if (!user._id) {
+          
+          this.alertRegister="Error al registrar el usuario";     
         }
         else{
           this.alertRegister='El registro se ha realizado con exitó, identificate con tu nueva cuenta :)';
+          console.log(this.user_register);
           this.user_register =new User('', '', '', '', '', 'ROLE_USER', '');
         }
       }),err => {
@@ -51,7 +56,7 @@ export class AppComponent implements OnInit {
       }
     }
     
-    console.log(this.user_register);
+    
   }
   onSubmit() {
     
@@ -105,6 +110,10 @@ export class AppComponent implements OnInit {
     localStorage.clear();
     this.identity=null;
     this.token=null;
+    this.errormessage=null;
+    this.alertRegister=null;
+    this._router.navigate(['/']);
+
   }
 
 

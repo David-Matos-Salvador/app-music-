@@ -1,0 +1,42 @@
+
+  
+<form #formArtist="ngForm" (ngSubmit)="onSubmit()" *ngIf="identity && identity.role=='ROLE_ADMIN'">
+  <h1>{{titulo}}</h1>
+       <div class="container ">
+        <div *ngIf="alertMessage" class="alert alert-info">
+          <strong>{{alertMessage}}</strong>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xl-8">
+          <label>Name</label>
+          <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" class="form-control">
+          <span *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xl-8">
+          <label>Description</label>
+          <textarea type="text" #description="ngModel" name="description" [(ngModel)]="artist.description"
+            class="form-control"></textarea>
+          <span *ngIf="!description.valid && description.touched">La descripcion es  Obligatorio</span>
+        </div>
+        <div *ngIf="is_edit">
+          
+          <div class="form-group col-md-6 col-lg-4 col-xl-8" *ngIf="artist.image && artist.image != 'null'">
+            <img  class="img-thumbnail" src="{{url+'get-img-artist/'+artist.image}}">
+          </div>
+          <div class="form-group col-md-6 col-lg-4 col-xl-8">
+            <label >Sube la Foto</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" (change)="fileChangeEvent($event)" id="customFile">
+                <label class="custom-file-label" for="customFile">Elige la imagen</label>
+              </div>
+          </div>
+          
+        </div>
+        <div class="text-right col-lg-4 col-md-6 col-xl-8">
+        <button type="submit" class="btn btn-outline-light pull-right " >Sign in</button>
+        </div>
+      </div>
+</form>
+<div *ngIf="!identity || identity.role!='ROLE_ADMIN'">
+  <h1> Error</h1>
+  <p>No tienes  acceso a esta parte de la aplicacion</p>
+</div>
