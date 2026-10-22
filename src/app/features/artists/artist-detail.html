@@ -1,0 +1,58 @@
+<a class="back-link" routerLink="/artists">
+  <app-icon name="chevron-left" [size]="16" /> Artistas
+</a>
+
+@if (artist.error()) {
+  <p class="alert" role="alert">{{ errorMessage(artist.error()) }}</p>
+} @else if (artist.value(); as artist) {
+  <header class="detail-hero">
+    <app-cover class="round" [src]="fileUrl('artist', artist.image)" [name]="artist.name" />
+    <div class="info">
+      <h1 class="page-title">{{ artist.name }}</h1>
+      @if (artist.description) {
+        <p class="muted">{{ artist.description }}</p>
+      }
+      @if (auth.isAdmin()) {
+        <div class="actions">
+          <a
+            class="btn btn-primary btn-sm"
+            [routerLink]="['/artists', artist._id, 'albums', 'new']"
+          >
+            <app-icon name="plus" [size]="16" /> Añadir álbum
+          </a>
+          <a class="btn btn-ghost btn-sm" [routerLink]="['/artists', artist._id, 'edit']">
+            <app-icon name="edit" [size]="16" /> Editar
+          </a>
+          <app-confirm-delete
+            [itemName]="artist.name"
+            question="Se borrarán también sus álbumes y canciones."
+            (confirmed)="deleteArtist()"
+          />
+        </div>
+      }
+    </div>
+  </header>
+
+  <h2 class="albums-title">Discografía</h2>
+  @if (albums.value(); as albums) {
+    <ul class="cover-grid">
+      @for (album of albums; track album._id) {
+        <li>
+          <a class="cover-link" [routerLink]="['/albums', album._id]">
+            <app-cover [src]="fileUrl('album', album.image)" [name]="album.title" />
+            <span>
+              <strong>{{ album.title }}</strong>
+              <span>{{ album.year }}</span>
+            </span>
+          </a>
+        </li>
+      } @empty {
+        <li class="empty">
+          <p>Este artista todavía no tiene álbumes.</p>
+        </li>
+      }
+    </ul>
+  }
+} @else {
+  <p class="muted">Cargando artista…</p>
+}

@@ -1,0 +1,38 @@
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<aside class="sidebar">
+  <a class="brand" routerLink="/">App Music</a>
+
+  <nav class="nav" aria-label="Principal">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <app-icon name="home" /> <span>Inicio</span>
+    </a>
+    <a routerLink="/artists" routerLinkActive="active">
+      <app-icon name="mic" /> <span>Artistas</span>
+    </a>
+    <a routerLink="/profile" routerLinkActive="active" class="nav-profile">
+      <app-icon name="user" /> <span>Perfil</span>
+    </a>
+  </nav>
+
+  <div class="account">
+    <a routerLink="/profile" class="account-link">
+      <app-cover class="avatar" [src]="avatar()" [name]="fullName()" />
+      <span>
+        <strong>{{ fullName() }}</strong>
+        @if (auth.isAdmin()) {
+          <small>Administrador</small>
+        }
+      </span>
+    </a>
+    <button type="button" class="btn btn-ghost btn-sm" (click)="auth.logout()">
+      <app-icon name="logout" [size]="16" /> Cerrar sesión
+    </button>
+  </div>
+</aside>
+
+<main id="main" class="content" tabindex="-1">
+  <router-outlet />
+</main>
+
+<app-player-bar class="player" />

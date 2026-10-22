@@ -1,0 +1,74 @@
+:host {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: 100dvh;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(2rem, 6vw, 5rem);
+  background:
+    radial-gradient(circle at 85% 110%, rgb(232 176 74 / 0.22), transparent 55%), var(--surface);
+}
+
+.brand {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  max-width: 11ch;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: clamp(2rem, 6vw, 5rem);
+}
+
+.panel .form {
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs button {
+  padding: 0 0 0.75rem;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tabs button[aria-selected='true'] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+@media (max-width: 860px) {
+  :host {
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    min-height: auto;
+  }
+}

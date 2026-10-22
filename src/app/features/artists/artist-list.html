@@ -1,0 +1,56 @@
+<header class="page-header">
+  <h1 class="page-title">Artistas</h1>
+  @if (auth.isAdmin()) {
+    <a class="btn btn-primary" routerLink="/artists/new">
+      <app-icon name="plus" [size]="18" /> Añadir artista
+    </a>
+  }
+</header>
+
+@if (artists.error()) {
+  <p class="alert" role="alert">{{ errorMessage(artists.error()) }}</p>
+} @else if (artists.value(); as result) {
+  <ul class="cover-grid">
+    @for (artist of result.items; track artist._id) {
+      <li>
+        <a class="cover-link round" [routerLink]="['/artists', artist._id]">
+          <app-cover [src]="fileUrl('artist', artist.image)" [name]="artist.name" />
+          <strong>{{ artist.name }}</strong>
+        </a>
+      </li>
+    } @empty {
+      <li class="empty">
+        <p>Aún no hay artistas.</p>
+        @if (auth.isAdmin()) {
+          <a class="btn btn-ghost" routerLink="/artists/new">Añadir el primero</a>
+        }
+      </li>
+    }
+  </ul>
+
+  @if (result.totalPages > 1) {
+    <nav class="pagination" aria-label="Páginas de artistas">
+      <a
+        class="btn btn-ghost btn-sm"
+        [class.disabled]="result.page <= 1"
+        [attr.aria-disabled]="result.page <= 1"
+        routerLink="/artists"
+        [queryParams]="{ page: result.page - 1 }"
+      >
+        <app-icon name="chevron-left" [size]="16" /> Anterior
+      </a>
+      <span class="muted">Página {{ result.page }} de {{ result.totalPages }}</span>
+      <a
+        class="btn btn-ghost btn-sm"
+        [class.disabled]="result.page >= result.totalPages"
+        [attr.aria-disabled]="result.page >= result.totalPages"
+        routerLink="/artists"
+        [queryParams]="{ page: result.page + 1 }"
+      >
+        Siguiente <app-icon name="chevron-right" [size]="16" />
+      </a>
+    </nav>
+  }
+} @else {
+  <p class="muted">Cargando artistas…</p>
+}

@@ -1,0 +1,94 @@
+@if (album.error()) {
+  <p class="alert" role="alert">{{ errorMessage(album.error()) }}</p>
+} @else if (album.value(); as album) {
+  <a class="back-link" [routerLink]="['/artists', album.artist._id]">
+    <app-icon name="chevron-left" [size]="16" /> {{ album.artist.name }}
+  </a>
+
+  <header class="detail-hero">
+    <app-cover [src]="fileUrl('album', album.image)" [name]="album.title" />
+    <div class="info">
+      <h1 class="page-title">{{ album.title }}</h1>
+      <p class="muted">
+        <a [routerLink]="['/artists', album.artist._id]">{{ album.artist.name }}</a
+        >, {{ album.year }}
+      </p>
+      @if (album.description) {
+        <p class="muted">{{ album.description }}</p>
+      }
+      <div class="actions">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="playable().length === 0"
+          (click)="playAll()"
+        >
+          <app-icon name="play" class="filled" [size]="18" /> Escuchar álbum
+        </button>
+        @if (auth.isAdmin()) {
+          <a class="btn btn-ghost btn-sm" [routerLink]="['/albums', album._id, 'songs', 'new']">
+            <app-icon name="plus" [size]="16" /> Añadir canción
+          </a>
+          <a class="btn btn-ghost btn-sm" [routerLink]="['/albums', album._id, 'edit']">
+            <app-icon name="edit" [size]="16" /> Editar
+          </a>
+          <app-confirm-delete
+            [itemName]="album.title"
+            question="Se borrarán también sus canciones."
+            (confirmed)="deleteAlbum(album.artist._id)"
+          />
+        }
+      </div>
+    </div>
+  </header>
+
+  @if (songs.value(); as songs) {
+    <ol class="tracklist">
+      @for (song of songs; track song._id) {
+        <li class="track" [class.current]="player.isCurrent(song)">
+          <button
+            type="button"
+            class="track-play"
+            [disabled]="!fileUrl('song', song.file)"
+            [attr.aria-label]="
+              (player.isCurrent(song) && player.playing() ? 'Pausar ' : 'Reproducir ') + song.name
+            "
+            (click)="play(song)"
+          >
+            <span class="number">{{ song.number }}</span>
+            <app-icon
+              class="filled"
+              [name]="player.isCurrent(song) && player.playing() ? 'pause' : 'play'"
+              [size]="16"
+            />
+          </button>
+          <span class="name">
+            {{ song.name }}
+            @if (!fileUrl('song', song.file)) {
+              <small class="muted">Sin audio</small>
+            }
+          </span>
+          <span class="duration muted">{{ song.duration }}</span>
+          @if (auth.isAdmin()) {
+            <span class="track-actions">
+              <a
+                class="btn btn-ghost btn-sm"
+                [routerLink]="['/songs', song._id, 'edit']"
+                [attr.aria-label]="'Editar ' + song.name"
+              >
+                <app-icon name="edit" [size]="16" />
+              </a>
+              <app-confirm-delete compact [itemName]="song.name" (confirmed)="deleteSong(song)" />
+            </span>
+          }
+        </li>
+      } @empty {
+        <li class="empty">
+          <p>Este álbum todavía no tiene canciones.</p>
+        </li>
+      }
+    </ol>
+  }
+} @else {
+  <p class="muted">Cargando álbum…</p>
+}
