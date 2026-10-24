@@ -1,8 +1,17 @@
 # App Music
 
-Aplicación web para explorar y escuchar un catálogo de música organizado por artista, álbum y pista. Consume la API [apirest_music_app](https://github.com/david-matos-salvador/apirest_music_app).
+Aplicación web para explorar y escuchar un catálogo de música organizado por artista, álbum y pista. Consume la API [apirest_music_app](https://github.com/David-Matos-Salvador/apirest_music_app) desplegada en `https://api.davidmatos.lat`.
 
 **Stack:** Angular 22 (componentes standalone, signals, zoneless, control flow `@if`/`@for`) · Formularios reactivos · `HttpClient` con interceptores · Vitest · ESLint (angular-eslint) · Prettier
+
+## Migración con IA
+
+Este proyecto fue modernizado y migrado con **asistencia de IA** (agentes de desarrollo):
+
+- **Frontend:** de la versión antigua de Angular a **Angular 22** con arquitectura standalone, signals y zoneless.
+- **API:** reescrita a **Node 22 + Express 5 + Mongoose 9** (repositorio [`apirest_music_app`](https://github.com/David-Matos-Salvador/apirest_music_app), rama `master`).
+- **Infraestructura:** migrada de **Heroku + MongoDB Atlas** a un **VPS propio (Contabo) con Coolify**. La API corre en [`https://api.davidmatos.lat`](https://api.davidmatos.lat) y usa MongoDB, Redis y almacenamiento S3 (SeaweedFS) en contenedores Docker con volúmenes persistentes, todo dentro de la red privada del servidor.
+- **CI/CD:** lint, tests y build en cada push/PR, y despliegue automático a GitHub Pages en `main`.
 
 ## Puesta en marcha
 
@@ -13,7 +22,7 @@ npm install
 npm start          # http://localhost:4200
 ```
 
-En desarrollo la app usa la API en `http://localhost:4000/api` (`src/environments/environment.development.ts`). Para producción, configura la URL pública de la API en `src/environments/environment.ts`.
+En desarrollo la app usa la API en `http://localhost:4000/api` (`src/environments/environment.development.ts`). En producción la URL ya está configurada en `src/environments/environment.ts` (`https://api.davidmatos.lat/api`).
 
 ## Scripts
 
@@ -45,4 +54,4 @@ src/app/
 
 ## Despliegue
 
-El workflow `CI` ejecuta lint, tests y build en cada push y PR. En `main`, además, publica en GitHub Pages; para activarlo ve a **Settings → Pages → Source** y elige **GitHub Actions**.
+El workflow `CI` ejecuta lint, tests y build en cada push y PR. En `main`, además, publica en GitHub Pages (fuente **GitHub Actions**, ya activada) en `https://david-matos-salvador.github.io/app-music-/`.
