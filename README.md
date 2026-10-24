@@ -1,27 +1,48 @@
-# AppMusic
+# App Music
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
+Aplicación web para explorar y escuchar un catálogo de música organizado por artista, álbum y pista. Consume la API [apirest_music_app](https://github.com/david-matos-salvador/apirest_music_app).
 
-## Development server
+**Stack:** Angular 22 (componentes standalone, signals, zoneless, control flow `@if`/`@for`) · Formularios reactivos · `HttpClient` con interceptores · Vitest · ESLint (angular-eslint) · Prettier
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Puesta en marcha
 
-## Code scaffolding
+Requiere Node.js 22.22.3+ o 24.15+.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+npm install
+npm start          # http://localhost:4200
+```
 
-## Build
+En desarrollo la app usa la API en `http://localhost:4000/api` (`src/environments/environment.development.ts`). Para producción, configura la URL pública de la API en `src/environments/environment.ts`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Scripts
 
-## Running unit tests
+| Script                   | Descripción                                                |
+| ------------------------ | ---------------------------------------------------------- |
+| `npm start`              | Servidor de desarrollo                                     |
+| `npm run build`          | Build de producción en `dist/app-music/browser`            |
+| `npm run build:gh-pages` | Build para GitHub Pages (base `/app-music-/` y `404.html`) |
+| `npm test`               | Tests unitarios con Vitest                                 |
+| `npm run lint`           | ESLint, incluidas reglas de accesibilidad en plantillas    |
+| `npm run format`         | Prettier                                                   |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Estructura
 
-## Running end-to-end tests
+```
+src/app/
+  app.config.ts        # Providers: router, HttpClient + interceptor de auth
+  app.routes.ts        # Rutas con carga diferida y guards
+  core/
+    api.ts             # URL de la API, URLs de ficheros, mensajes de error
+    models.ts          # Tipos de los datos de la API
+    auth/              # Sesión (signals), interceptor y guards
+    catalog/           # Servicios de artistas, álbumes y canciones
+    player/            # Estado global del reproductor
+  layout/              # Shell (navegación) y barra del reproductor
+  features/            # Páginas: login, inicio, artistas, álbumes, canciones, perfil
+  shared/              # Componentes reutilizables: icono, portada, selector de ficheros…
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Despliegue
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+El workflow `CI` ejecuta lint, tests y build en cada push y PR. En `main`, además, publica en GitHub Pages; para activarlo ve a **Settings → Pages → Source** y elige **GitHub Actions**.

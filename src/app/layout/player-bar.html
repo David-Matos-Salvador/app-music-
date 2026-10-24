@@ -1,0 +1,53 @@
+@if (song(); as song) {
+  <div class="vinyl" [class.spinning]="player.playing()" aria-hidden="true">
+    <app-cover class="label" [src]="cover()" [name]="song.album.title" />
+  </div>
+
+  <div class="meta">
+    <strong class="title">{{ song.name }}</strong>
+    <a class="subtitle" [routerLink]="['/albums', song.album._id]">
+      {{ song.album.artist.name }}, {{ song.album.title }}
+    </a>
+  </div>
+
+  <div class="controls">
+    <button type="button" class="icon-btn" aria-label="Anterior" (click)="player.previous()">
+      <app-icon name="previous" class="filled" />
+    </button>
+    <button
+      type="button"
+      class="icon-btn play"
+      [attr.aria-label]="player.playing() ? 'Pausar' : 'Reproducir'"
+      (click)="player.toggle()"
+    >
+      <app-icon [name]="player.playing() ? 'pause' : 'play'" class="filled" [size]="22" />
+    </button>
+    <button
+      type="button"
+      class="icon-btn"
+      aria-label="Siguiente"
+      [disabled]="!player.hasNext()"
+      (click)="player.next()"
+    >
+      <app-icon name="next" class="filled" />
+    </button>
+  </div>
+
+  <div class="progress">
+    <span>{{ player.currentTime() | duration }}</span>
+    <input
+      type="range"
+      min="0"
+      step="1"
+      aria-label="Posición de la canción"
+      [max]="player.duration() || 0"
+      [value]="player.currentTime()"
+      [style.--progress]="(player.currentTime() / (player.duration() || 1)) * 100 + '%'"
+      (input)="seek($event)"
+    />
+    <span>{{ player.duration() | duration }}</span>
+  </div>
+} @else {
+  <div class="vinyl" aria-hidden="true"></div>
+  <p class="idle">Elige una canción de cualquier álbum para empezar a escuchar.</p>
+}
